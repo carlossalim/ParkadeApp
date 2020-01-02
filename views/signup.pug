@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  .container
+    .col-lg-2
+    .col-lg-8
+      form(action="/signup" method="POST")
+        .form-row
+          .text-center.mb-4
+            h1= title
+            p Welcome to #{title}
+        .form-row
+          .form-group.col-md-6   
+            .form-label-group       
+              input#email.form-control(type='email' name='email' required)
+              label(for='email') Email
+          .form-group.col-md-6
+            .form-label-group           
+              input#password.form-control(type='password' name='password' required)
+              label(for='password') Password
+        .form-row
+          .form-group.col-md-6   
+            .form-label-group       
+              input#firstName.form-control(type='text' name='firstName' required)
+              label(for='firstName') First Name
+          .form-group.col-md-6
+            .form-label-group           
+              input#lastName.form-control(type='text' name='lastName' required)
+              label(for='lastName') Last Name
+        .form-label-group        
+          input#address.form-control(type='text' name='address' placeholder='1234 Main St')
+          label(for='address') Address
+        .form-label-group
+          input#address2.form-control(type='text' name='address2' placeholder='Apartment, studio, or floor')
+          label(for='address2') Address 2
+        .form-row
+          .form-label-group.col-md-6
+            input#city.form-control(type='text' name='city') 
+            label(for='city') City
+          .form-group.col-md-4
+            select#state.form-control(name='state')
+              option(selected='' ) Choose Province
+              option(value='BC' ) British Columbia
+              option(value='AB' ) Alberta
+              option(value='ON' ) Ontario
+            label(for='state') 
+          .form-label-group.col-md-2
+            input#zip.form-control(type='text' name='zip')
+            label(for='zip') Zip
+        .form-group
+          .form-check
+            input#gridCheck.form-check-input(type='checkbox')
+            label.form-check-label(for='gridCheck')
+              | Check me out
+        button.btn.btn-lg.btn-primary(type='Submit') Sign in
+    .col-lg-2

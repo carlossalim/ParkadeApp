@@ -1,0 +1,12 @@
+mixin head(title)
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" crossorigin="anonymous">
+        <script src="/javascripts/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="/javascripts/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script src="/javascripts/popper.min.js"  crossorigin="anonymous"></script>
+    body
+      block content

@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  include common/head.pug
+  +head(title)
+  include common/navbar.pug
+  +navbar(user)
+
+  block content
+    .container
+      if (user)
+        .container
+          .row
+            .col
+              .jumbotron
+                h1= title 
+                .row
+                  p Welcome to #{title} #{user.email} #{user.isAdmin}
+                .row
+                  p This App was made for your never need to leave the comfort of your home to bring a visitor to your friends.
+                .row  
+                  p From now on you just need to add their plate number in our system to assign a visitor tag. 
+                .row  
+                  p And it it always fantastic for the build to control the usage of the visitor's spot.
+              .col
+            img(src='/images/visitortag.jpg' alt='Visitor Tag' style='width:225px; height:225px;')

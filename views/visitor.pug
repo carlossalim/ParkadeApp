@@ -1,0 +1,48 @@
+doctype html
+html(lang='en')
+  include common/head.pug
+  +head(title)
+  include common/navbar.pug
+  +navbar(user)
+
+  block content
+    h1= title
+    if (error_msg!="")
+      each msg, index  in error_msg
+          p.alert.alert-danger #{msg}
+    if (success_msg!="")
+      each msg, index  in success_msg
+          .alert.alert-success #{msg}
+  
+    each parkade in parkades
+      each unit in parkade.Units
+        form(action='/visitor' method='POST')
+          .jumbotron.jumbotron-fluid.pt-5.pb-5
+            .container.mt-0.mb-0 
+              p.h2 Welcome #{unit.ownerName}
+              p.h3 Add a new visitor vehicle to #{parkade.name}
+          .jumbotron.jumbotron-fluid.pt-4.pb-4           
+            .container.mt-0.mb-0.border 
+              input.btn.btn-md.ml-2.w-75.text-left.text-uppercase(type="hidden" id="parkadeid" name="parkadeid" value=parkade.id)
+              input.btn.btn-md.ml-2.w-75.text-left.text-uppercase(type="hidden" id="unitid" name="unitid" value=unit.id)
+              form-group.row
+                input.btn.btn-md.ml-2.w-75.text-left.text-uppercase(type="text" id="plate" name="plate" placeholder="Enter visitor plate number: VE7 ABC" )  
+              form-group.row
+                p
+              button.btn.btn-lg.btn-secondary(type="submit") Add Visitor
+      p 
+    .jumbotron.jumbotron-fluid.pt-4.pb-2
+      .container.mt-0.mb-0
+        each visitor,index in visitors
+          .p.mb-4
+            if (moment(visitor.createdAt).add(1,'days') > moment() )
+              a.btn.btn-lg.btn-primary.mb-2(href='./visitor/delete/'+visitor.id) Free this Spot!  
+                h4
+                  span.badge  Plate:!{visitor.plate}   Period:  !{moment(visitor.createdAt).format("MMM, DD YYYY HH:mm")} - !{moment(visitor.createdAt).add(1,'days').format("MMM, DD YYYY HH:mm")} 
+            else
+              h4
+                span Plate:!{visitor.plate}   Period:  !{moment(visitor.createdAt).format("MMM, DD YYYY HH:mm")} - !{moment(visitor.createdAt).add(1,'days').format("MMM, DD YYYY HH:mm")} 
+
+
+  
+

@@ -1,0 +1,49 @@
+doctype html
+html(lang='en')
+  include common/head.pug
+  +head(title)
+  include common/navbar.pug
+  +navbar(user)
+    
+  block content
+    if (errors)
+      each error, index  in errors
+          p.alert.alert-danger Error on (!{error.param}): !{error.msg} 
+    if (error_msg!="")
+      each msg, index  in error_msg
+          p.alert.alert-danger #{msg}
+    if (success_msg!="")
+      each msg, index  in success_msg
+          .alert.alert-success #{msg}
+    
+    h1= title
+    p Welcome to #{title}
+    
+    .container
+      form(action="" method="POST")
+        select.selectpicker.form-control.btn.btn-md.w-50(id='parkadeid' name='parkadeid'  required)
+            option(value = '') Select your Condominium Parkade
+            each parkade in parkades
+              if (parkade.id == parkadeid)
+                option(value = parkade.id selected) #{parkade.name}
+              else  
+                option(value = parkade.id) #{parkade.name}
+        .form-label-group
+          //- label(for='inputPlate') Please inform the plate number:    
+          input#inputPlate.form-control.w-50(type="text" name="plate" placeholder="Please inform the plate number: " required )
+        p  
+        button(type="submit" ).btn.btn-lg.btn-secondary Check plate status
+    p
+    .jumbotron.jumbotron-flex
+      .container
+        if (visitors && visitors.length>0)
+          each visitor,index in visitors
+            if visitor.createdAt > moment().add(-1,'days').toDate()
+              .alert.alert-success OK - Authorized by !{visitor.Unit.ownerName}, Unit:!{visitor.Unit.unit} until !{moment(visitor.createdAt).add(1,'days').format('MMM, DD YYYY HH:mm')}
+            else
+              if (index == 0)
+                .alert.alert-danger  NO ACCESS GRANTED
+              .alert.alert-secondary History - Authorized by !{visitor.Unit.ownerName}, Unit:!{visitor.Unit.unit} until !{moment(visitor.createdAt).add(1,'days').format('MMM, DD YYYY HH:mm')}
+        else
+          if (visitors) 
+            .alert.alert-danger  NO ACCESS GRANTED

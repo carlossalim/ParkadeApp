@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-md-4                             
+            div(style={ background: '#dfdfdf    '}).col-md-4.mx-auto     
+                     
+                form(action="./login" method="POST").form-signin
+                    .text-center.mb-4
+                        h1= title
+                        p Welcome to Parkade APP
+                    .form-label-group
+                        input#inputEmail.form-control(type="email" name="email" placeholder="Email address" required )
+                        label(for='inputEmail') Email address                        
+                    .form-label-group
+                        input#password.form-control(type="password"  name="password" placeholder="Password" required)
+                        label(for='password') Password
+                    button.btn.btn-lg.btn-primary.btn-block(type='submit' autofocus) Sign in
+                    .checkbox.mb-3
+                        label
+                        input(type='checkbox' value='remember-me')
+                        |  Remember me
+                    if (error_msg!="")
+                        .alert.alert-danger #{error_msg} 
+                p.mt-2.mb-0
+                    | Forgot your password? #[a(href="#") Reset Password]
+                p.m-0
+                    | Do not have an account? #[a(href="/signup") Sign up here]
+                p.mt-5.mb-3.text-muted.text-center copyright &copy; 2019
+            .col-md-4

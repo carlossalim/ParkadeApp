@@ -1,0 +1,124 @@
+doctype html
+html(lang='en')
+  include common/head.pug
+  +head(title)
+  include common/navbar.pug
+  +navbar(user)
+  
+  a.btn.btn-lg.btn-primary.mb-2(href='/unit/listall') List all Units
+  if (errors)
+    each error, index  in errors
+        p.alert.alert-danger Error on (!{error.param}): !{error.msg} 
+  if (error_msg!="")
+    each msg, index  in error_msg
+        p.alert.alert-danger #{msg}
+  if (success_msg!="")
+    each msg, index  in success_msg
+        .alert.alert-success #{msg}
+  block content
+    if(units && !isDetail)
+        <!-- LIST ALL UNITS-->
+        h1.mb-3 !{title}  
+        .jumbotron.jumbotron-fluid            
+            .container
+                for unit in units
+                    .div(id=unit.id)
+                        p.unit.mb-4
+                        a.btn.btn-primary(href='/unit/' + unit.id) Details
+                        | 
+                        button.btn.btn-primary(onClick=`deleteUnit('${unit.id}')`) Delete Json/Ajax
+                        |   
+                        span Unit:!{unit.unit}  -!{unit.ownerName}(email:!{unit.email})
+    else if(units && isDetail)
+        <!-- LIST ONE UNIT-->
+        h1.mb-3 !{title}  
+        .jumbotron.jumbotron-fluid            
+            for unit in units
+                .container
+                    form(action='/unit/update/'+unit.id method='POST')
+                        .row
+                            .col
+                                .form-group
+                                    //- Listing all PArkades 
+                                    select.selectpicker.btn.btn-md(id='parkadeid' name='parkadeid'  required)
+                                        option(value = '') Select your Condominium Parkade
+                                        each parkade in parkades
+                                            if (parkade.id == unit.parkadeid)
+                                                option(value = parkade.id selected)  #{parkade.name}
+                                            else
+                                                option(value = parkade.id)   #{parkade.name}
+                        .row
+                            .col
+                                .form-group
+                                    label(for='ownerName' ) Owner Name
+                                    input.form-control(type='text' placeholder='Owner name' id='ownerName' name='ownerName' value=unit.ownerName required)  
+                            .col        
+                                .form-group
+                                    label(for='unit') Unit
+                                    input.form-control(type='text' placeholder='Unit #3310' id='unit' name='unit' value=unit.unit required)         
+                        .row
+                            .col
+                                .form-group
+                                    label(for='email') Email
+                                    input.form-control(type='email' placeholder='Email' id='email' name='email' value=unit.email  required)
+                            .col
+                                .form-group
+                                    label(for='spots') #Spots
+                                    input.form-control(type='number' placeholder='#Spots ex: 1 or 2' id='spots' name='spots' value=unit.spots required)
+                        .row
+                            .col
+                                .form-group
+                                    label(for='owner_username') Username
+                                    input.form-control(type='username' placeholder='Username' id='owner_username' name='owner_username' value=unit.username required)
+                            .col
+                                .form-group
+                                    label(for='owner_password') Password
+                                    input.form-control(type='password' placeholder='Password' id='owner_password' name='owner_password' value=unit.password required)
+                        p
+                        a.btn.btn-lg.btn-primary.mb-2(href='/unit/del/'+unit.id) Delete Condominium Unit
+                        | 
+                        button.btn.btn-lg.btn-primary.mb-2(type='Submit') Update Condominium Unit
+    else
+        h1 Create a new Condominium Unit
+        <!-- CREATE ONE UNIT-->
+        .jumbotron.jumbotron-fluid 
+            .container
+                form(action='/unit/add' method='POST')
+                    .row
+                        .col
+                            .form-group
+                                //- label(for='parkadeid' ).lead.em Select Condominium Parkade:
+                                select.selectpicker.btn.btn-md.mt-4.col-md-8.col-offset-4(id='parkadeid' name='parkadeid' required)
+                                    option(value = '') Select your Condominium Parkade
+                                    each parkade in parkades
+                                        option(value = parkade.id) !{parkade.name}
+                    .row
+                        .col
+                            .form-group
+                                label(for='ownerName' ) Owner Name
+                                input.form-control(type='text' placeholder='Owner name' id='ownerName' name='ownerName' value=ownerName required)  
+                        .col        
+                            .form-group
+                                label(for='unit') Unit
+                                input.form-control(type='text' placeholder='Unit #3310' id='unit' name='unit' value=unit required)         
+                    .row
+                        .col
+                            .form-group
+                                label(for='email') Email
+                                input.form-control(type='email' placeholder='Email' id='email' name='email' value =email required)
+                        .col
+                            .form-group
+                                label(for='spots') #Spots
+                                input.form-control(type='number' placeholder='#Spots ex: 1 or 2' id='spots' name='spots' value=spots required)
+                    .row
+                        .col
+                            .form-group
+                                label(for='owner_username') Username
+                                input.form-control(type='username' placeholder='Username' id='owner_username' name='owner_username' value=owner_username required)
+                        .col
+                            .form-group
+                                label(for='owner_password') Password
+                                input.form-control(type='password' placeholder='Password' id='owner_password' name='owner_password' value=owner_password required)
+                    button.btn.btn-lg.btn-primary.mt-2(type='submit') Create New Unit
+  script(src='/javascripts/jquery-3.2.1.min.js')      
+  script(src='/javascripts/myscript.js')   
