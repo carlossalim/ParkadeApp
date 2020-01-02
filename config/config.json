@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "parkade_user",
+    "password": "!ckpvu3zr6quKj!",
+    "database": "parkadedb",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": 0
+  },
+  "test": {
+    "username": "parkade_user",
+    "password": "!ckpvu3zr6quKj!",
+    "database": "parkadedb",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": 0
+  },
+  "production": {
+    "username": "parkade_user",
+    "password": "!ckpvu3zr6quKj!",
+    "database": "parkadedb",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": 0
+  }
+}
